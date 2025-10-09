@@ -1,3 +1,7 @@
 ^transplantR\.Rproj$
 ^\.Rproj\.user$
 ^logo\.png$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$

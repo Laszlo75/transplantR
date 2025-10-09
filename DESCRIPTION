@@ -9,6 +9,8 @@ Description: A collection of functions for transplant medicine and nephrology,
     calculations (CKD-EPI 2021 GFR), data extraction from transplant PDF reports,
     and visualization tools for cumulative transplant activity reporting.
 License: MIT + file LICENSE
+URL: https://laszlo75.github.io/transplantR/, https://github.com/Laszlo75/transplantR
+BugReports: https://github.com/Laszlo75/transplantR/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
