@@ -1,26 +1,29 @@
-# transplantR <img src="man/figures/logo.png" align="right" height="139" alt="" />
+# transplantR `<img src="man/figures/logo.png" align="right" height="139" alt="" />`
 
 Functions for transplant medicine and nephrology, including clinical risk indices, kidney function calculations, data extraction, and visualization tools.
 
 ## Features
 
 ### Clinical Risk Assessment
+
 - **KDRI 2012** - Kidney Donor Risk Index (2012 version)
 - **KDRI 2019** - Updated Kidney Donor Risk Index with risk categorization
 - **GFR Calculation** - CKD-EPI 2021 equation for estimated glomerular filtration rate
 
 ### Data Processing
+
 - **PDF Extraction** - Extract donor data from TransplantPath PDF reports with regex parsing
 - **Cumulative Analysis** - Create time-series datasets for transplant activity tracking
 
 ### Visualization
+
 - **Cumulative Plots** - Year-over-year comparison charts with automatic labeling
 
 ## Installation
 
 ```r
 # Install from source
-devtools::install_github("your-username/transplantR")
+devtools::install_github("Laszlo75/transplantR")
 
 # Or install locally
 devtools::install()
