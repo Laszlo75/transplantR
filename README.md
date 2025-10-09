@@ -1,4 +1,4 @@
-# transplantR `<img src="man/figures/logo.png" align="right" height="139" alt="" />`
+# transplantR <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 Functions for transplant medicine and nephrology, including clinical risk indices, kidney function calculations, data extraction, and visualization tools.
 
