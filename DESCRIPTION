@@ -1,0 +1,25 @@
+Package: transplantR
+Title: Functions for Transplant Reports and Clinical Risk Assessment
+Version: 0.0.0.9000
+Authors@R:
+    person("Laszlo", "Szabo", , "laszlo.szabo@wales.nhs.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-6881-1542"))
+Description: A collection of functions for transplant medicine and nephrology,
+    including clinical risk indices (KDRI 2012, KDRI 2019), kidney function
+    calculations (CKD-EPI 2021 GFR), data extraction from transplant PDF reports,
+    and visualization tools for cumulative transplant activity reporting.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports:
+    dplyr,
+    ggplot2,
+    ggrepel,
+    lubridate,
+    pdftools,
+    stringr,
+    tibble,
+    tidyr
+Suggests:
+    testthat (>= 3.0.0)
