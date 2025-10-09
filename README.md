@@ -96,6 +96,12 @@ plot_cumulative(
 )
 ```
 
+## Data Privacy
+
+This package provides tools for analyzing transplant data but does **NOT** include any patient data. Users are responsible for ensuring GDPR and data protection compliance when using this package with real patient data.
+
+**Important:** Never commit patient data or PDF files containing patient information to version control.
+
 ## License
 
 MIT License
