@@ -58,3 +58,8 @@ Patient Identifiable Information
 patient identifiable information
 Scanning repository for Patient Identifiable Information
 PII Scan Results
+
+# Example patterns in documentation (not real data)
+NHS: 123 456 7890
+your-email@example.com
+example date pattern

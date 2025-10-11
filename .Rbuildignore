@@ -5,3 +5,5 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^\.pii-whitelist$
+^PII-PROTECTION\.md$
