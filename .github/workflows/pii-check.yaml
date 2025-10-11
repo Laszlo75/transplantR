@@ -1,0 +1,100 @@
+# GitHub Actions workflow to check for PII
+# Runs on every push and pull request as a backup safety layer
+
+name: PII Check
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  pii-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Get full history for comprehensive scan
+
+      - name: Check for sensitive patterns
+        run: |
+          echo "🔍 Scanning repository for Patient Identifiable Information..."
+
+          PII_FOUND=0
+
+          # Function to scan files
+          scan_files() {
+            local pattern="$1"
+            local description="$2"
+            local severity="$3"
+
+            echo "Checking for: $description"
+
+            MATCHES=$(git grep -n -i -E "$pattern" -- \
+              '*.R' '*.r' '*.Rmd' '*.md' '*.txt' '*.csv' '*.json' \
+              ':!.pii-whitelist' ':!LICENSE' ':!.git/*' || true)
+
+            if [ -n "$MATCHES" ]; then
+              if [ "$severity" = "HIGH" ]; then
+                echo "::error::$description detected"
+                echo "$MATCHES"
+                PII_FOUND=1
+              else
+                echo "::warning::Possible $description detected"
+                echo "$MATCHES"
+              fi
+            fi
+          }
+
+          # High-confidence PII patterns (will fail the build)
+          scan_files '\b[0-9]{3}[[:space:]][0-9]{3}[[:space:]][0-9]{4}\b' "NHS numbers" "HIGH"
+          scan_files '\b0[0-9]{3}[[:space:]]?[0-9]{3}[[:space:]]?[0-9]{4}\b' "UK phone numbers" "HIGH"
+          scan_files '(MRN|Medical Record|Patient ID)[[:space:]]*:?[[:space:]]*[A-Z0-9]{5,}' "Medical record numbers" "HIGH"
+
+          # Medium-confidence patterns (warnings only)
+          scan_files '\b[A-Z]{1,2}[0-9]{1,2}[A-Z]?[[:space:]]?[0-9][A-Z]{2}\b' "UK postcodes" "MEDIUM"
+          scan_files '\b(0[1-9]|[12][0-9]|3[01])[/\-](0[1-9]|1[012])[/\-](19|20)[0-9]{2}\b' "Date patterns" "MEDIUM"
+
+          # Check for accidentally committed data files
+          if find . -name "*.pdf" -o -name "*.xls" -o -name "*.xlsx" | grep -v ".git" | grep -q .; then
+            echo "::error::Data files (PDF/Excel) found in repository"
+            find . -name "*.pdf" -o -name "*.xls" -o -name "*.xlsx" | grep -v ".git"
+            PII_FOUND=1
+          fi
+
+          if [ $PII_FOUND -eq 1 ]; then
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "❌ PII CHECK FAILED"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "High-confidence PII patterns detected in the repository."
+            echo "Please review and remove any patient identifiable information."
+            exit 1
+          else
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "✅ PII CHECK PASSED"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "No high-confidence PII patterns detected."
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### PII Scan Results 🔍" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Repository has been scanned for patient identifiable information." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Patterns checked:**" >> $GITHUB_STEP_SUMMARY
+          echo "- NHS numbers" >> $GITHUB_STEP_SUMMARY
+          echo "- UK phone numbers" >> $GITHUB_STEP_SUMMARY
+          echo "- Medical record numbers" >> $GITHUB_STEP_SUMMARY
+          echo "- UK postcodes" >> $GITHUB_STEP_SUMMARY
+          echo "- Date patterns" >> $GITHUB_STEP_SUMMARY
+          echo "- Data files (PDF/Excel)" >> $GITHUB_STEP_SUMMARY

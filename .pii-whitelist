@@ -1,0 +1,60 @@
+# PII Whitelist Configuration
+# Patterns in this file will be excluded from PII detection
+# Lines starting with # are comments
+
+# Author contact information (safe to publish)
+laszlo.szabo@wales.nhs.uk
+noreply@anthropic.com
+
+# Example/test data years (not actual patient dates)
+2012
+2019
+2021
+2025
+2024
+
+# Generic test values used in documentation/tests
+donor_age_year = 45
+donor_age_year = 50
+donor_age_year = 55
+donor_age_year = 60
+donor_age_year = 65
+age = 40
+age = 50
+creatinine = 70
+creatinine = 80
+creatinine = 85
+donor_weight = 75
+donor_height = 170
+donor_height = 175
+donor_height = 180
+
+# KDRI threshold values (constants, not patient data)
+kdri_2019 <= 0.83
+kdri_2019 > 0.83
+kdri_2019 <= 1.35
+kdri_2019 > 1.35
+kdri_2019 <= 1.7
+kdri_2019 > 1.7
+
+# Package metadata
+transplantR
+ORCID: 0000-0002-6881-1542
+
+# Function parameter examples (field names, not data)
+donor_dob
+donor_age
+donor_sex
+donor_number
+tx_date
+
+# Documentation URLs
+github.com
+github.io
+claude.com
+
+# PII detection system messages (safe - not actual PII)
+Patient Identifiable Information
+patient identifiable information
+Scanning repository for Patient Identifiable Information
+PII Scan Results
