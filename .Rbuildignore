@@ -7,3 +7,6 @@
 ^\.github$
 ^\.pii-whitelist$
 ^PII-PROTECTION\.md$
+^\.claude$
+^CLAUDE\.md$
+^LICENSE\.md$
