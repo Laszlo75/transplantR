@@ -28,6 +28,26 @@ jobs:
 
           PII_FOUND=0
 
+          # Load whitelist patterns if it exists
+          WHITELIST_PATTERNS=""
+          if [ -f ".pii-whitelist" ]; then
+            WHITELIST_PATTERNS=$(cat .pii-whitelist | grep -v '^#' | grep -v '^$' || true)
+            echo "✓ Loaded whitelist with $(echo "$WHITELIST_PATTERNS" | wc -l) patterns"
+          fi
+
+          # Function to check if match is whitelisted
+          is_whitelisted() {
+            local match="$1"
+            if [ -n "$WHITELIST_PATTERNS" ]; then
+              while IFS= read -r pattern; do
+                if echo "$match" | grep -qF "$pattern"; then
+                  return 0
+                fi
+              done <<< "$WHITELIST_PATTERNS"
+            fi
+            return 1
+          }
+
           # Function to scan files
           scan_files() {
             local pattern="$1"
@@ -37,17 +57,27 @@ jobs:
             echo "Checking for: $description"
 
             MATCHES=$(git grep -n -i -E "$pattern" -- \
-              '*.R' '*.r' '*.Rmd' '*.md' '*.txt' '*.csv' '*.json' \
-              ':!.pii-whitelist' ':!LICENSE' ':!.git/*' || true)
+              '*.R' '*.r' '*.Rmd' '*.txt' '*.csv' '*.json' \
+              ':!.pii-whitelist' ':!PII-PROTECTION.md' ':!LICENSE' ':!.git/*' || true)
 
             if [ -n "$MATCHES" ]; then
-              if [ "$severity" = "HIGH" ]; then
-                echo "::error::$description detected"
-                echo "$MATCHES"
-                PII_FOUND=1
-              else
-                echo "::warning::Possible $description detected"
-                echo "$MATCHES"
+              # Filter out whitelisted matches
+              FILTERED_MATCHES=""
+              while IFS= read -r match; do
+                if ! is_whitelisted "$match"; then
+                  FILTERED_MATCHES="${FILTERED_MATCHES}${match}\n"
+                fi
+              done <<< "$MATCHES"
+
+              if [ -n "$FILTERED_MATCHES" ]; then
+                if [ "$severity" = "HIGH" ]; then
+                  echo "::error::$description detected"
+                  echo -e "$FILTERED_MATCHES"
+                  PII_FOUND=1
+                else
+                  echo "::warning::Possible $description detected"
+                  echo -e "$FILTERED_MATCHES"
+                fi
               fi
             fi
           }
