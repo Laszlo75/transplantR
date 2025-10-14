@@ -1,20 +1,20 @@
 #' Extract donor data from PDF reports
 #'
-#' Processes all PDF files in a specified folder to extract comprehensive donor
+#' Processes specified PDF files to extract comprehensive donor
 #' information using regular expression patterns. This function is designed to
 #' parse TransplantPath donor reports and extract structured data for analysis.
 #'
 #' The function automatically:
-#' * **Scans for PDF files** in the specified directory
+#' * **Validates PDF files** in the provided file list
 #' * **Extracts text content** from each PDF using the pdftools package
 #' * **Applies regex patterns** to identify and extract specific donor variables
 #' * **Calculates derived variables** such as days in hospital
 #' * **Handles errors gracefully** with informative warnings for problematic files
 #' * **Returns a clean tibble** with all extracted donor information
 #'
-#' @param folder_path (character) Full or relative path to the folder containing
-#'   PDF files. The function will recursively search for files with ".pdf"
-#'   extension (case-insensitive).
+#' @param files (character) Character vector of full or relative paths to PDF
+#'   files to process. Each file must exist and have a ".pdf" extension
+#'   (case-insensitive). Use `list.files()` to generate file lists from folders.
 #'
 #' @return A **tibble** containing extracted donor information with the following columns:
 #'   * `donor_number` - ODT donor identification number
@@ -45,8 +45,10 @@
 #'   * `filename` - Source PDF filename for reference
 #'
 #' @section Error Handling:
-#'   * **Missing folder**: Function stops with informative error message
-#'   * **No PDF files**: Returns empty tibble with warning
+#'   * **Invalid input**: Function stops if files parameter is not a character vector
+#'   * **Missing files**: Function stops if any specified file does not exist
+#'   * **Non-PDF files**: Function stops if any file lacks .pdf extension
+#'   * **Empty file list**: Returns empty tibble with warning
 #'   * **Corrupted PDFs**: Individual file failures are logged as warnings,
 #'     but processing continues for remaining files
 #'   * **Date parsing errors**: Days in hospital calculation defaults to NA
@@ -63,15 +65,19 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Extract data from a folder of PDF reports
-#' donor_data <- extract_donor_data_from_pdfs("path/to/pdf/folder")
+#' # Extract data from a list of specific PDF files
+#' files <- c("path/to/donor1.pdf", "path/to/donor2.pdf")
+#' donor_data <- extract_donor_data_from_pdfs(files)
+#'
+#' # Extract data from all PDFs in a folder using list.files()
+#' pdf_files <- list.files("path/to/pdf/folder",
+#'                         pattern = "\\.pdf$",
+#'                         full.names = TRUE)
+#' donor_data <- extract_donor_data_from_pdfs(pdf_files)
 #'
 #' # Check the results
 #' glimpse(donor_data)
 #' cat("Processed", nrow(donor_data), "donor records")
-#'
-#' # Extract from current working directory subfolder
-#' donor_data <- extract_donor_data_from_pdfs("./reports/donor_pdfs")
 #' }
 #'
 #' @importFrom pdftools pdf_text
@@ -80,23 +86,34 @@
 #' @importFrom tibble tibble
 #' @importFrom lubridate dmy dmy_hm
 #' @export
-extract_donor_data_from_pdfs <- function(folder_path) {
-  # Check if folder exists
-  if (!dir.exists(folder_path)) {
-    stop("Folder does not exist: ", folder_path)
+extract_donor_data_from_pdfs <- function(files) {
+  # Validate input type
+  if (!is.character(files)) {
+    stop("'files' parameter must be a character vector of file paths")
   }
 
-  # Get list of PDF files
-  files <- list.files(
-    folder_path,
-    full.names = TRUE,
-    pattern = "\\.pdf$"
-  )
-
-  # Check if any PDF files found
+  # Check if any files provided
   if (length(files) == 0) {
-    warning("No PDF files found in: ", folder_path)
+    warning("No files provided")
     return(tibble())
+  }
+
+  # Check if all files exist
+  missing_files <- files[!file.exists(files)]
+  if (length(missing_files) > 0) {
+    stop(
+      "The following files do not exist:\n  ",
+      paste(missing_files, collapse = "\n  ")
+    )
+  }
+
+  # Check if all files have .pdf extension
+  non_pdf_files <- files[!grepl("\\.pdf$", files, ignore.case = TRUE)]
+  if (length(non_pdf_files) > 0) {
+    stop(
+      "The following files do not have .pdf extension:\n  ",
+      paste(non_pdf_files, collapse = "\n  ")
+    )
   }
 
   cat("Found", length(files), "PDF files\n")
