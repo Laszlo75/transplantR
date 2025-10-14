@@ -4,12 +4,12 @@
 \alias{extract_donor_data_from_pdfs}
 \title{Extract donor data from PDF reports}
 \usage{
-extract_donor_data_from_pdfs(folder_path)
+extract_donor_data_from_pdfs(files)
 }
 \arguments{
-\item{folder_path}{(character) Full or relative path to the folder containing
-PDF files. The function will recursively search for files with ".pdf"
-extension (case-insensitive).}
+\item{files}{(character) Character vector of full or relative paths to PDF
+files to process. Each file must exist and have a ".pdf" extension
+(case-insensitive). Use \code{list.files()} to generate file lists from folders.}
 }
 \value{
 A \strong{tibble} containing extracted donor information with the following columns:
@@ -43,14 +43,14 @@ A \strong{tibble} containing extracted donor information with the following colu
 }
 }
 \description{
-Processes all PDF files in a specified folder to extract comprehensive donor
+Processes specified PDF files to extract comprehensive donor
 information using regular expression patterns. This function is designed to
 parse TransplantPath donor reports and extract structured data for analysis.
 }
 \details{
 The function automatically:
 \itemize{
-\item \strong{Scans for PDF files} in the specified directory
+\item \strong{Validates PDF files} in the provided file list
 \item \strong{Extracts text content} from each PDF using the pdftools package
 \item \strong{Applies regex patterns} to identify and extract specific donor variables
 \item \strong{Calculates derived variables} such as days in hospital
@@ -61,8 +61,10 @@ The function automatically:
 \section{Error Handling}{
 
 \itemize{
-\item \strong{Missing folder}: Function stops with informative error message
-\item \strong{No PDF files}: Returns empty tibble with warning
+\item \strong{Invalid input}: Function stops if files parameter is not a character vector
+\item \strong{Missing files}: Function stops if any specified file does not exist
+\item \strong{Non-PDF files}: Function stops if any file lacks .pdf extension
+\item \strong{Empty file list}: Returns empty tibble with warning
 \item \strong{Corrupted PDFs}: Individual file failures are logged as warnings,
 but processing continues for remaining files
 \item \strong{Date parsing errors}: Days in hospital calculation defaults to NA
@@ -87,15 +89,19 @@ Make sure these are loaded before calling the function.
 
 \examples{
 \dontrun{
-# Extract data from a folder of PDF reports
-donor_data <- extract_donor_data_from_pdfs("path/to/pdf/folder")
+# Extract data from a list of specific PDF files
+files <- c("path/to/donor1.pdf", "path/to/donor2.pdf")
+donor_data <- extract_donor_data_from_pdfs(files)
+
+# Extract data from all PDFs in a folder using list.files()
+pdf_files <- list.files("path/to/pdf/folder",
+                        pattern = "\\\\.pdf$",
+                        full.names = TRUE)
+donor_data <- extract_donor_data_from_pdfs(pdf_files)
 
 # Check the results
 glimpse(donor_data)
 cat("Processed", nrow(donor_data), "donor records")
-
-# Extract from current working directory subfolder
-donor_data <- extract_donor_data_from_pdfs("./reports/donor_pdfs")
 }
 
 }
