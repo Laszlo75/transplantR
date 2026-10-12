@@ -89,12 +89,15 @@
 extract_donor_data_from_pdfs <- function(files) {
   # Validate input type
   if (!is.character(files)) {
-    stop("'files' parameter must be a character vector of file paths")
+    stop(
+      "'files' parameter must be a character vector of file paths, got: ",
+      class(files)[1]
+    )
   }
 
   # Check if any files provided
   if (length(files) == 0) {
-    warning("No files provided")
+    warning("No files provided to process")
     return(tibble())
   }
 
