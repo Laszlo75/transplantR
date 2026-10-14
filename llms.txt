@@ -1,8 +1,7 @@
 # transplantR
 
 Functions for transplant medicine and nephrology, including clinical
-risk indices, kidney function calculations, data extraction, and
-visualization tools.
+risk indices, kidney function calculations, and visualization tools.
 
 ## Features
 
@@ -16,8 +15,6 @@ visualization tools.
 
 ### Data Processing
 
-- **PDF Extraction** - Extract donor data from TransplantPath PDF
-  reports with regex parsing
 - **Cumulative Analysis** - Create time-series datasets for transplant
   activity tracking
 
@@ -81,14 +78,6 @@ gfr <- calculate_gfr(
 )
 ```
 
-### Extract donor data from PDFs
-
-``` r
-
-# Extract from folder of TransplantPath reports
-donor_data <- extract_donor_data_from_pdfs("path/to/pdf/folder")
-```
-
 ### Create cumulative visualization
 
 ``` r
@@ -141,13 +130,6 @@ metrics
   : Calculate KDRI 2019 Category
 - [`calculate_gfr()`](https://laszlo75.github.io/transplantR/reference/calculate_gfr.md)
   : Calculate GFR from creatinine
-
-## Data Extraction
-
-Tools for extracting donor data from PDF reports
-
-- [`extract_donor_data_from_pdfs()`](https://laszlo75.github.io/transplantR/reference/extract_donor_data_from_pdfs.md)
-  : Extract donor data from PDF reports
 
 ## Data Processing
 

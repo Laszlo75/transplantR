@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="index.html">transplantR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@
 <p>This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.</p>
 <div class="section level2">
 <h2 id="project-overview">Project Overview<a class="anchor" aria-label="anchor" href="#project-overview"></a></h2>
-<p><strong>transplantR</strong> is an R package for transplant medicine and nephrology that provides clinical risk assessment tools, data extraction from PDF reports, and visualization functions for transplant activity reporting. Used by NHS Wales for analyzing transplant outcomes.</p>
+<p><strong>transplantR</strong> is an R package for transplant medicine and nephrology that provides clinical risk assessment tools and visualization functions for transplant activity reporting. Used by NHS Wales for analyzing transplant outcomes.</p>
 </div>
 <div class="section level2">
 <h2 id="package-architecture">Package Architecture<a class="anchor" aria-label="anchor" href="#package-architecture"></a></h2>
@@ -54,13 +54,11 @@
 <li>Input validation relies on type coercion - strings like “YES”/“NO” are expected</li>
 </ul></li>
 <li>
-<strong>Data Pipeline</strong> (<code>R/extract_donor_data.R</code>, <code>R/create_cumulative_df.R</code>)
+<strong>Data Processing</strong> (<code>R/create_cumulative_df.R</code>)
 <ul><li>
-<code><a href="reference/extract_donor_data_from_pdfs.html">extract_donor_data_from_pdfs()</a></code>: Regex-based extraction from TransplantPath PDF reports</li>
-<li>Returns structured tibbles with parsed dates, numeric conversions, and calculated fields</li>
-<li>
 <code><a href="reference/create_cumulative_df.html">create_cumulative_df()</a></code>: Aggregates transplant events into month-by-month cumulative counts</li>
-<li>Both support optional <code>params</code> object for parameterized R Markdown reports</li>
+<li>Supports optional <code>params</code> object for parameterized R Markdown reports</li>
+<li>TransplantPath PDF extraction is maintained in a separate package; don’t add PDF report tools back to this repo</li>
 </ul></li>
 <li>
 <strong>Visualization</strong> (<code>R/plot_cumulative.R</code>)
@@ -153,11 +151,7 @@
 <li>
 <strong>ggplot2/ggrepel</strong>: Plotting</li>
 <li>
-<strong>pdftools</strong>: PDF text extraction</li>
-<li>
 <strong>lubridate</strong>: Date parsing</li>
-<li>
-<strong>stringr</strong>: Regex extraction</li>
 </ul></div>
 </div>
 <div class="section level2">
@@ -190,7 +184,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="function-grouping">Function Grouping<a class="anchor" aria-label="anchor" href="#function-grouping"></a></h3>
-<p>Functions organized into: - Clinical Risk Assessment - Data Extraction - Data Processing - Visualization</p>
+<p>Functions organized into: - Clinical Risk Assessment - Data Processing - Visualization</p>
 <p>Match these groups when adding new functions to <code>_pkgdown.yml</code>.</p>
 </div>
 </div>
@@ -210,9 +204,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="error-handling">Error Handling<a class="anchor" aria-label="anchor" href="#error-handling"></a></h3>
-<ul><li>
-<code><a href="reference/extract_donor_data_from_pdfs.html">extract_donor_data_from_pdfs()</a></code>: Uses <code><a href="https://rdrr.io/r/base/conditions.html" class="external-link">tryCatch()</a></code> per file, warns but continues on errors</li>
-<li>Returns empty tibbles for missing data (not NULL or errors)</li>
+<ul><li>Returns empty tibbles for missing data (not NULL or errors)</li>
 <li>Date parsing failures → <code>NA</code> (not errors)</li>
 </ul></div>
 <div class="section level3">
@@ -267,7 +259,7 @@ Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;</code></pre>
 </div>
 <div class="section level2">
 <h2 id="package-state">Package State<a class="anchor" aria-label="anchor" href="#package-state"></a></h2>
-<ul><li>Version: 0.0.0.9000 (development)</li>
+<ul><li>Version: 0.1.0</li>
 <li>Status: Production-ready, in active use</li>
 <li>License: MIT</li>
 <li>R version: Compatible with R 4.5+</li>

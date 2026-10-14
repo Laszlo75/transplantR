@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/Laszlo75/transplantR/blob/main/DESCRIPTION)
 
 Szabo L (2026). *transplantR: Functions for Transplant Reports and
-Clinical Risk Assessment*. R package version 0.0.0.9000,
+Clinical Risk Assessment*. R package version 0.1.0,
 <https://laszlo75.github.io/transplantR/>.
 
     @Manual{,
       title = {transplantR: Functions for Transplant Reports and Clinical Risk Assessment},
       author = {Laszlo Szabo},
       year = {2026},
-      note = {R package version 0.0.0.9000},
+      note = {R package version 0.1.0},
       url = {https://laszlo75.github.io/transplantR/},
     }

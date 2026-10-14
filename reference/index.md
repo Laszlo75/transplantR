@@ -14,13 +14,6 @@ metrics
 - [`calculate_gfr()`](https://laszlo75.github.io/transplantR/reference/calculate_gfr.md)
   : Calculate GFR from creatinine
 
-## Data Extraction
-
-Tools for extracting donor data from PDF reports
-
-- [`extract_donor_data_from_pdfs()`](https://laszlo75.github.io/transplantR/reference/extract_donor_data_from_pdfs.md)
-  : Extract donor data from PDF reports
-
 ## Data Processing
 
 Functions for preparing transplant activity data

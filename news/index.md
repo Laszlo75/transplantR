@@ -1,13 +1,26 @@
 # Changelog
 
+## transplantR 0.1.0 (2026-10-14)
+
+First numbered release.
+
+#### Breaking Changes
+
+**`extract_donor_data_from_pdfs()`** has been removed. It has moved,
+unchanged, to a separate package for tools specific to the
+TransplantPath donor reports. transplantR now focuses on the clinical
+calculators and the activity reporting plots.
+
+- `pdftools`, `stringr` and `tibble` are no longer dependencies
+
 ## transplantR 0.0.0.9000
 
 ### Changes (2025-10-14)
 
 #### Breaking Changes
 
-**[`extract_donor_data_from_pdfs()`](https://laszlo75.github.io/transplantR/reference/extract_donor_data_from_pdfs.md)** -
-**BREAKING**: Function signature changed
+**`extract_donor_data_from_pdfs()`** - **BREAKING**: Function signature
+changed
 
 - Now accepts a character vector of file paths instead of a folder path
 
@@ -44,8 +57,8 @@
 
 #### Data Extraction
 
-**[`extract_donor_data_from_pdfs()`](https://laszlo75.github.io/transplantR/reference/extract_donor_data_from_pdfs.md)** -
-Extract donor data from TransplantPath PDF reports
+**`extract_donor_data_from_pdfs()`** - Extract donor data from
+TransplantPath PDF reports
 
 - Comprehensive regex-based parsing
 - Automatic data type conversion

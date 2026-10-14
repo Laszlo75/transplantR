@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">transplantR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,12 +36,22 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="transplantr-010-2026-10-14">transplantR 0.1.0 (2026-10-14)<a class="anchor" aria-label="anchor" href="#transplantr-010-2026-10-14"></a></h2>
+<p>First numbered release.</p>
+<div class="section level4">
+<h4 id="breaking-changes-0-1-0">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-1-0"></a></h4>
+<p><strong><code>extract_donor_data_from_pdfs()</code></strong> has been removed. It has moved, unchanged, to a separate package for tools specific to the TransplantPath donor reports. transplantR now focuses on the clinical calculators and the activity reporting plots.</p>
+<ul><li>
+<code>pdftools</code>, <code>stringr</code> and <code>tibble</code> are no longer dependencies</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.0.0.9000" id="transplantr-0009000">transplantR 0.0.0.9000<a class="anchor" aria-label="anchor" href="#transplantr-0009000"></a></h2>
 <div class="section level3">
 <h3 id="changes-0-0-0-9000">Changes (2025-10-14)<a class="anchor" aria-label="anchor" href="#changes-0-0-0-9000"></a></h3>
 <div class="section level4">
 <h4 id="breaking-changes-0-0-0-9000">Breaking Changes<a class="anchor" aria-label="anchor" href="#breaking-changes-0-0-0-9000"></a></h4>
-<p><strong><code><a href="../reference/extract_donor_data_from_pdfs.html">extract_donor_data_from_pdfs()</a></code></strong> - <strong>BREAKING</strong>: Function signature changed</p>
+<p><strong><code>extract_donor_data_from_pdfs()</code></strong> - <strong>BREAKING</strong>: Function signature changed</p>
 <ul><li><p>Now accepts a character vector of file paths instead of a folder path</p></li>
 <li><p>Parameter renamed from <code>folder_path</code> to <code>files</code></p></li>
 <li><p>Users must now use <code><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files()</a></code> to generate file lists from folders</p></li>
@@ -49,7 +59,7 @@
 <p><strong>Migration</strong>: Replace <code>extract_donor_data_from_pdfs("path/to/folder")</code> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pdf_files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"path/to/folder"</span>, pattern <span class="op">=</span> <span class="st">"\\.pdf$"</span>, full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/extract_donor_data_from_pdfs.html">extract_donor_data_from_pdfs</a></span><span class="op">(</span><span class="va">pdf_files</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">extract_donor_data_from_pdfs</span><span class="op">(</span><span class="va">pdf_files</span><span class="op">)</span></span></code></pre></div>
 <ul><li>Benefits: More flexible file selection, can process files from multiple locations, easier testing</li>
 </ul></li>
 </ul></div>
@@ -69,7 +79,7 @@
 </ul></div>
 <div class="section level4">
 <h4 id="data-extraction-0-0-0-9000">Data Extraction<a class="anchor" aria-label="anchor" href="#data-extraction-0-0-0-9000"></a></h4>
-<p><strong><code><a href="../reference/extract_donor_data_from_pdfs.html">extract_donor_data_from_pdfs()</a></code></strong> - Extract donor data from TransplantPath PDF reports</p>
+<p><strong><code>extract_donor_data_from_pdfs()</code></strong> - Extract donor data from TransplantPath PDF reports</p>
 <ul><li>Comprehensive regex-based parsing</li>
 <li>Automatic data type conversion</li>
 <li>Error handling and validation</li>

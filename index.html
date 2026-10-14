@@ -16,8 +16,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Functions for Transplant Reports and Clinical Risk Assessment">
-<meta name="description" content="A collection of functions for transplant medicine and nephrology, including clinical risk indices (KDRI 2012, KDRI 2019), kidney function calculations (CKD-EPI 2021 GFR), data extraction from transplant PDF reports, and visualization tools for cumulative transplant activity reporting.">
-<meta property="og:description" content="A collection of functions for transplant medicine and nephrology, including clinical risk indices (KDRI 2012, KDRI 2019), kidney function calculations (CKD-EPI 2021 GFR), data extraction from transplant PDF reports, and visualization tools for cumulative transplant activity reporting.">
+<meta name="description" content="A collection of functions for transplant medicine and nephrology, including clinical risk indices (KDRI 2012, KDRI 2019), kidney function calculations (CKD-EPI 2021 GFR), and visualization tools for cumulative transplant activity reporting.">
+<meta property="og:description" content="A collection of functions for transplant medicine and nephrology, including clinical risk indices (KDRI 2012, KDRI 2019), kidney function calculations (CKD-EPI 2021 GFR), and visualization tools for cumulative transplant activity reporting.">
 <meta property="og:image" content="https://laszlo75.github.io/transplantR/logo.png">
 </head>
 <body>
@@ -28,7 +28,7 @@
 
     <a class="navbar-brand me-2" href="index.html">transplantR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@
 <img src="logo.png" class="logo" alt=""><h1 id="transplantr-">transplantR <a class="anchor" aria-label="anchor" href="#transplantr-"></a>
 </h1>
 </div>
-<p>Functions for transplant medicine and nephrology, including clinical risk indices, kidney function calculations, data extraction, and visualization tools.</p>
+<p>Functions for transplant medicine and nephrology, including clinical risk indices, kidney function calculations, and visualization tools.</p>
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
@@ -83,8 +83,6 @@
 <h3 id="data-processing">Data Processing<a class="anchor" aria-label="anchor" href="#data-processing"></a>
 </h3>
 <ul>
-<li>
-<strong>PDF Extraction</strong> - Extract donor data from TransplantPath PDF reports with regex parsing</li>
 <li>
 <strong>Cumulative Analysis</strong> - Create time-series datasets for transplant activity tracking</li>
 </ul>
@@ -152,16 +150,9 @@
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="extract-donor-data-from-pdfs">Extract donor data from PDFs<a class="anchor" aria-label="anchor" href="#extract-donor-data-from-pdfs"></a>
-</h3>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Extract from folder of TransplantPath reports</span></span>
-<span><span class="va">donor_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/extract_donor_data_from_pdfs.html">extract_donor_data_from_pdfs</a></span><span class="op">(</span><span class="st">"path/to/pdf/folder"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
 <h3 id="create-cumulative-visualization">Create cumulative visualization<a class="anchor" aria-label="anchor" href="#create-cumulative-visualization"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Prepare data</span></span>
 <span><span class="va">cum_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/create_cumulative_df.html">create_cumulative_df</a></span><span class="op">(</span></span>
 <span>  <span class="va">transplants_df</span>,</span>
