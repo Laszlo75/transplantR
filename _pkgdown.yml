@@ -28,12 +28,6 @@ reference:
   - calc_kdri2019_category
   - calculate_gfr
 
-- title: Data Extraction
-  desc: >
-    Tools for extracting donor data from PDF reports
-  contents:
-  - extract_donor_data_from_pdfs
-
 - title: Data Processing
   desc: >
     Functions for preparing transplant activity data

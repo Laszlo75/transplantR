@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**transplantR** is an R package for transplant medicine and nephrology that provides clinical risk assessment tools, data extraction from PDF reports, and visualization functions for transplant activity reporting. Used by NHS Wales for analyzing transplant outcomes.
+**transplantR** is an R package for transplant medicine and nephrology that provides clinical risk assessment tools and visualization functions for transplant activity reporting. Used by NHS Wales for analyzing transplant outcomes.
 
 ## Package Architecture
 
@@ -16,11 +16,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
    - All use base R math (no external calculation libraries)
    - Input validation relies on type coercion - strings like "YES"/"NO" are expected
 
-2. **Data Pipeline** (`R/extract_donor_data.R`, `R/create_cumulative_df.R`)
-   - `extract_donor_data_from_pdfs()`: Regex-based extraction from TransplantPath PDF reports
-   - Returns structured tibbles with parsed dates, numeric conversions, and calculated fields
+2. **Data Processing** (`R/create_cumulative_df.R`)
    - `create_cumulative_df()`: Aggregates transplant events into month-by-month cumulative counts
-   - Both support optional `params` object for parameterized R Markdown reports
+   - Supports optional `params` object for parameterized R Markdown reports
+   - TransplantPath PDF extraction is maintained in a separate package; don't add
+     PDF report tools back to this repo
 
 3. **Visualization** (`R/plot_cumulative.R`)
    - Year-over-year comparison plots using ggplot2 + ggrepel
@@ -92,9 +92,7 @@ pkgdown::build_site()
 ### Key Dependencies
 - **dplyr**: Data manipulation (uses NSE)
 - **ggplot2/ggrepel**: Plotting
-- **pdftools**: PDF text extraction
 - **lubridate**: Date parsing
-- **stringr**: Regex extraction
 
 ## Testing
 
@@ -121,7 +119,6 @@ test_that("function_name works correctly", {
 ### Function Grouping
 Functions organized into:
 - Clinical Risk Assessment
-- Data Extraction
 - Data Processing
 - Visualization
 
@@ -136,7 +133,6 @@ Match these groups when adding new functions to `_pkgdown.yml`.
 - **Weights/heights**: Numeric in kg/cm
 
 ### Error Handling
-- `extract_donor_data_from_pdfs()`: Uses `tryCatch()` per file, warns but continues on errors
 - Returns empty tibbles for missing data (not NULL or errors)
 - Date parsing failures → `NA` (not errors)
 
@@ -183,7 +179,7 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 
 ## Package State
 
-- Version: 0.0.0.9000 (development)
+- Version: 0.1.0
 - Status: Production-ready, in active use
 - License: MIT
 - R version: Compatible with R 4.5+
