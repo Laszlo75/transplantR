@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/Laszlo75/transplantR/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/Laszlo75/transplantR/blob/v0.1.0/DESCRIPTION)
 
 Szabo L (2026). *transplantR: Functions for Transplant Reports and
 Clinical Risk Assessment*. R package version 0.1.0,
